@@ -1,65 +1,57 @@
-# 🚌 Easy Travel by Bus — Asansafar (Case Study)
+<h1 align="center">🚌 Easy Travel by Bus</h1>
+<p align="center">An intelligent public transport assistant built with modern web and mobile technologies to help citizens navigate city buses more easily.</p>
 
-[![status](https://img.shields.io/badge/Status-Case%20Study-blueviolet)]()
-[![platform](https://img.shields.io/badge/Platform-Mobile%20(React%20Native)%20%7C%20Web%20(React)-0a7bbb)]()
-[![backend](https://img.shields.io/badge/Backend-Django-0C4B33)]()
-[![maps](https://img.shields.io/badge/Maps-Neshan%20API-1f6feb)]()
-[![routing](https://img.shields.io/badge/Routing-Multi--criteria%20A*-2ea043)]()
-[![license](https://img.shields.io/badge/License-MIT-2c974b)](LICENSE)
-
-> **Easy Travel by Bus** is an urban mobility assistant that helps citizens navigate city buses effortlessly.  
-> Cross-platform (React Native mobile + React web) with a Django REST backend, powered by **Neshan API** for maps/traffic and a **multi-criteria routing engine** that minimizes transfers and travel time while providing realistic ETAs.
-
-> **Note:** This repository is a **public case study**. Production code is proprietary and cannot be published.  
-> Architecture, algorithms, and my role are documented below.
+<div align="center">
+  <img src="https://img.shields.io/badge/Platform-Web%20%26%20Mobile-blue?style=flat-square"/>
+  <img src="https://img.shields.io/badge/Frontend-React%20%7C%20ReactNative-orange?style=flat-square"/>
+  <img src="https://img.shields.io/badge/Backend-Django-brightgreen?style=flat-square"/>
+  <img src="https://img.shields.io/badge/API-Neshan%20%7C%20OpenStreetMap-informational?style=flat-square"/>
+  <img src="https://img.shields.io/badge/Role-CTO%20%7C%20Tech%20Lead-purple?style=flat-square"/>
+</div>
 
 ---
 
-## 🔎 Quick Overview
+## 📌 About the Project
 
-- **Goal:** Make bus usage simple, fast, and reliable for commuters.
-- **My Role:** **Technical Manager** — system architecture, roadmap, integrations, quality oversight, and delivery.
-- **Stack:**  
-  - **Mobile:** React Native  
-  - **Web:** React  
-  - **Backend:** Django (REST)  
-  - **Maps/Traffic/Geocoding:** **Neshan API**  
-  - **Storage/Caching:** PostgreSQL + Redis
-- **Collaboration:** Exploratory collaboration with **Tehran Municipality** (MVP reviews & alignment).
-- **Status:** MVP completed and validated; details kept private.
+This system helps citizens access the city bus network more easily by:
+- Visualizing real-time nearby bus routes
+- Recommending optimal paths based on time and traffic
+- Reducing transfer complexity and trip duration
+- Providing a mobile-first user experience
+
+The data comes from the Neshan API and is enhanced through a custom optimization algorithm developed for this project.
 
 ---
 
-## ✨ Features
+## 🚀 Tech Stack
 
-- **Smart route planning** (minimum transfers, time-aware suggestions)  
-- **ETA estimation** from Neshan traffic/road conditions  
-- **Nearest stops** (from current location / chosen point)  
-- **Favorites / recents**, **Dark/Light** themes, **multi-language** UI  
-- **Map visualization** (stops, lines, walking segments)  
-- **Web/Mobile parity**, **privacy-aware**, **rate-limit-aware** API
-
-> Optional (enterprise): offline tiles, telemetry dashboards, service health.
+| Category       | Technologies                     |
+|----------------|----------------------------------|
+| 📱 Mobile App   | React Native                    |
+| 🌐 Web App      | React + Tailwind CSS             |
+| ⚙️ Backend      | Django + Django REST Framework   |
+| 🌍 Data Source  | Neshan API + City Transit Data   |
+| 🧠 Algorithm    | Custom Path Optimization Engine  |
+| 📈 Hosting      | Docker, Railway / Heroku (Optional) |
 
 ---
 
-## 🧠 Routing (Multi-Criteria A\*)
+## 🧠 Features
 
-Model: weighted directed graph
+- 🔍 Bus stop & route finder
+- ⏰ Live arrival and delay estimator
+- 📍 Smart nearby station detection
+- 🗺️ Interactive map visualization
+- 💡 Minimal transfer optimization
+- 📲 Cross-platform (PWA + Android/iOS)
 
-- **Nodes:** bus stops (+ virtual anchors for origin/destination)  
-- **Edges:** in-vehicle, transfer (with penalty), walking  
-- **Cost `g(n)`** combines: `in_vehicle_time` + `waiting_time` + `transfer_penalty` + `walk_time`  
-- **Heuristic `h(n)`**: time-to-goal from Haversine + avg. speed  
-- **Objective:** minimize **total time**; **transfers** as a secondary constraint  
-- **ETA:** adjusted using **Neshan** traffic layers (fallback: historical averages)
+---
+
+## 🧪 Architecture Overview
 
 ```mermaid
-flowchart LR
-    A[Origin (lat,lng)] --> B{Nearest Stop(s)}
-    B -->|walk| C[Graph Node]
-    C --> D((A* Search))
-    D --> E[Path w/ edges]
-    E --> F[ETA Adjustment (Neshan traffic)]
-    F --> G[Final Route + Steps]
-    G --> H((Mobile/Web UI))
+graph TD;
+  User[🧑 User App] -->|Request Route| ReactApp[🌐 React / React Native]
+  ReactApp -->|API Call| Backend[⚙️ Django REST API]
+  Backend -->|Geo Data| Neshan[Neshan API]
+  Backend -->|Compute| Optimizer[🚀 Route Optimizer]
